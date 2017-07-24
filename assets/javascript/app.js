@@ -46,7 +46,7 @@ $(document).ready(function() {
 		correctAnswersCount = 0;
 		incorrectAnswersCount = 0;
 		unansweredAnswersCount = 0;
-		secondsLeft = 120;
+		secondsLeft = 7;
 		$(".time-remaining").text(secondsLeft);
 
 		var timeRemainingHandle = setInterval(function() {
@@ -55,6 +55,9 @@ $(document).ready(function() {
 			}
 			secondsLeft--;
 			$(".time-remaining").text(secondsLeft);
+			if(secondsLeft <= 0) {
+				endGame(timeRemainingHandle);
+			}
 		}, 1000);
 
 		$(".start").hide();
@@ -62,6 +65,7 @@ $(document).ready(function() {
 		$(".trivia-game-view").show();
 	}
 	function endGame(timerHandle) {
+		debugger;
 		clearInterval(timerHandle);
 		$(".trivia-game-view").hide();
 		tallyScores();
@@ -77,7 +81,7 @@ $(document).ready(function() {
 		$(".trivia-question").each(function(key, value) {
 			var $chosenInputRadio = $(value).find("input:checked");
 			debugger;
-			var expectedAnswer = triviaQuestionsCollection[$chosenInputRadio.attr("name")].answer;
+			var expectedAnswer = triviaQuestionsCollection[$(value).attr("name")].answer;
 			if(typeof expectedAnswer !== "undefined") {
 				if(expectedAnswer == $chosenInputRadio.val()) {
 					correctAnswersCount++;
@@ -92,7 +96,7 @@ $(document).ready(function() {
 	function setupQuestions() {
 		$triviaQuestionsContainer = $(".trivia-questions-container");
 		$.each(triviaQuestionsCollection, function(questionKey, triviaQuestion) {
-			var $triviaQuestion = $("<div>").addClass("trivia-question");
+			var $triviaQuestion = $("<div>").addClass("trivia-question").attr("name", questionKey);
 			var $question = $("<p>").addClass("question-text").text(triviaQuestion.question);
 			$question.appendTo($triviaQuestion);
 			var $questionOptionsForm = $("<form>");
