@@ -1,0 +1,6 @@
+.trivia-option {
+	display: block;
+}
+.trivia-game-view, .results {
+	display: none;
+}
