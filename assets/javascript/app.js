@@ -1,9 +1,13 @@
 $(document).ready(function() {
+	const TIMER_SECONDS = 15;
 	var correctAnswersCount = 0;
 	var incorrectAnswersCount = 0;
 	var unansweredAnswersCount = 0;
 	
 	var secondsLeft = 0;
+
+	var timeRemainingHandle = null;
+
 
 	var triviaQuestionsCollection = {
 		"hawaiiQuestion": {
@@ -46,27 +50,23 @@ $(document).ready(function() {
 		correctAnswersCount = 0;
 		incorrectAnswersCount = 0;
 		unansweredAnswersCount = 0;
-		secondsLeft = 7;
+		secondsLeft = TIMER_SECONDS;
 		$(".time-remaining").text(secondsLeft);
 
-		var timeRemainingHandle = setInterval(function() {
+		timeRemainingHandle = setInterval(function() {
 			if(secondsLeft <= 0) {
-				endGame(timeRemainingHandle);
+				endGame();
 			}
 			secondsLeft--;
 			$(".time-remaining").text(secondsLeft);
-			if(secondsLeft <= 0) {
-				endGame(timeRemainingHandle);
-			}
 		}, 1000);
 
 		$(".start").hide();
 		$(".results").hide();
 		$(".trivia-game-view").show();
 	}
-	function endGame(timerHandle) {
-		debugger;
-		clearInterval(timerHandle);
+	function endGame() {
+		clearInterval(timeRemainingHandle);
 		$(".trivia-game-view").hide();
 		tallyScores();
 		fillResultsTable(correctAnswersCount, incorrectAnswersCount, unansweredAnswersCount);
@@ -80,7 +80,6 @@ $(document).ready(function() {
 	function tallyScores() {
 		$(".trivia-question").each(function(key, value) {
 			var $chosenInputRadio = $(value).find("input:checked");
-			debugger;
 			var expectedAnswer = triviaQuestionsCollection[$(value).attr("name")].answer;
 			if(typeof expectedAnswer !== "undefined") {
 				if(expectedAnswer == $chosenInputRadio.val()) {
