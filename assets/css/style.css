@@ -3,6 +3,13 @@ body {
 }
 div.main-content, footer {
 	margin: 2% 3% 2% 5%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.trivia-question {
+	margin-bottom: 2%;
+}
+.trivia-question > p {
+	font-weight: bold;
 }
 .trivia-option {
 	display: block;
