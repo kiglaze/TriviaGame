@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	const TIMER_SECONDS = 15;
+	const TIMER_SECONDS = 120;
 	var correctAnswersCount = 0;
 	var incorrectAnswersCount = 0;
 	var unansweredAnswersCount = 0;
