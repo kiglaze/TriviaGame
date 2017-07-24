@@ -12,11 +12,19 @@ $(document).ready(function() {
 	$(".start").click(function() {
 		startGame();
 	});
+	$(".reset").click(function() {
+		startGame();
+	});
 	$(".finish").click(function() {
 		endGame();
 	});
 	function startGame() {
-		debugger;
+		correctAnswersCount = 0;
+		incorrectAnswersCount = 0;
+		unansweredAnswersCount = 0;
+		secondsLeft = 100;
+		$(".time-remaining").text(secondsLeft);
+
 		var timeRemainingHandle = setInterval(function() {
 			secondsLeft--;
 			$(".time-remaining").text(secondsLeft);
@@ -25,7 +33,9 @@ $(document).ready(function() {
 				endGame();
 			}
 		}, 1000);
+			
 		$(".start").hide();
+		$(".results").hide();
 		$(".trivia-game-view").show();
 	}
 	function endGame() {
